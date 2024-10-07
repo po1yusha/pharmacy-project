@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/index_style.css' %} ">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+    <title>Аптека "Бажаємо здоров'я!"</title>
+
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+            <div class="header__menu menu">
+                <nav class="menu__body">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="{% url 'index' %}" class="menu__link main-page_text">Головна</a>
+                        </li>
+                        <li class="menu__item">
+                            <nav class="drop-menu">
+                                <ul class="drop-menu__list">
+                                    <li>
+                                        <a href="" class="menu__link blue">Каталог товарів</a>
+                                        <ul class="sub-menu__list">
+                                            <li>
+                                                <a href="{% url 'catalog_medicine' %}" class="sub-menu__link">Медикаменти</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">БАД і вітаміни</a>
+                                                <ul class="sub-sub-menu__list">
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Мінеральні добавки</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Тонізуючі препарати</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Вітаміни для
+                                                            діабетиків</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Медичні товари</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Антибіотики</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Товари для косметологів</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Товари для мам і дітей</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </li>
+
+                        <li class="menu__item search">
+                            <a href="#" class="menu__link">
+                                <div class="search-bar">
+                                    <form class="search-bar__box">
+                                        <div class="search-bar__container">
+                                            <img src="{% static 'img/search_logo.png' %}" class="search_logo"
+                                                 alt="search">
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="menu__item with_icon">
+                            <a href="{% url 'my_orders' %}" class="menu__link">
+                                <i class="fa-solid fa-receipt"></i>
+                                <div class="menu__item-text">
+                                    Мої замовлення
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="menu__item with_icon cart-header">
+                            <div class="actions-header__item">
+                                <a href="" class="menu__link">
+                                    <i class="fa-regular fa-cart-shopping cart-header_icon"></i>
+                                    <div class="menu__item-text">
+                                        Кошик
+                                    </div>
+
+                                </a>
+                                <div class="cart-header__body">
+                                    <ul class="cart-header__list cart-list"></ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="menu__item with_icon">
+                            <div class="header__button">
+                                {% if request.user.is_authenticated %}
+                                    <a href="{% url 'logout' %}" class="button button_blue popup-link">Вийти</a>
+                                {% else %}
+                                    <a href="{% url 'login' %}"
+                                       class="button button_blue popup-link">{{ enter_tit }}</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            {% if request.user.is_authenticated %}
+                <span class="title_hi">Вітаємо, {{ user.first_name }}!</span>
+            {% else %}
+                <span class="title_hi">{{ tit }}</span>
+            {% endif %}
+        </div>
+    </header>
+    <main class="main lock-padding">
+        <section class="get-started">
+            <div class="get-started__container">
+                <div class="get-started__content">
+                    <div class="get-started__block-text block-text">
+                        <h1 class="block-text__title block-text__title_blue">Подбайте про <span>здоров'я</span> вашої
+                            родини.</h1>
+                        <div class="block-text__text">Онлайн-сервіс Аптека "Бажаємо здоров'я!" — це піклування про
+                            кожного клієнта. Завдяки нашим якісним продуктам тепер легко позбутися неприємних симптомів
+                            і підтримувати ваше здоров'я.
+                        </div>
+
+                        {% if request.user.is_authenticated %}
+                            <a href="" class="block-text__button button">За покупками!</a>
+                        {% else %}
+                            <a href="" class="block-text__button button">{{ button_name }}</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="get-started__image">
+                    {% if request.user.is_authenticated %}
+                        <img class="get-started__image_doctor" src="{% static 'img/main-greating.png' %}"
+                             alt="Image of doctor">
+                    {% else %}
+                        <img class="get-started__image_doctor" src="{{ main_image }}" alt="Image of doctor">
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <section class="brands">
+            <div class="brands__container">
+                <div class="brands__title title">
+                    <h3>Популярні бренди</h3>
+                </div>
+                <div class="brands-statistics">
+                    <div class="brand-flex">
+                        <img class="brands-names coloplast_img" src="{% static 'img/coloplast_logo.png.webp' %}"
+                             alt="Coloplast">
+                        <img class="brands-names p&g_img" src="{% static 'img/p&g_logo.png' %}" alt="P&G">
+                        <img class="brands-names jonson_img" src="{% static 'img/jonson_logo.png' %}" alt="Jonson">
+                        <img class="brands-names pfizer_img" src="{% static 'img/pfizer_logo.svg.png' %}" alt="Pfizer">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="recent-reviews">
+            <div class="recent-reviews__container">
+                <div class="recent-reviews__title title">
+                    <h3>Останні відгуки</h3>
+                </div>
+                <div class="recent-review__items">
+                    <div class="recent-column">
+
+                        <div class="recent-review__item item">
+                            <div class="recent-review__item__name">
+                                Віта Григорович
+                            </div>
+                            <div class="recent-review__item__title">
+                                17.02.2021
+                            </div>
+                            <div class="recent-review__item__text">
+                                Бронюйте ліки на сайті, заощаджуйте свій час та гроші. Дійсно реально допомогли знайти
+                                потрібні пігулки. Велике дякую лікарям і фармацевтам!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-column">
+
+                        <div class="recent-review__item item">
+                            <div class="recent-review__item__name">
+                                Роксолана Романюк
+                            </div>
+                            <div class="recent-review__item__title">
+                                17.02.2022
+                            </div>
+                            <div class="recent-review__item__text">
+                                Дуже потрібний сервіс!!! Гарно працює, зручний для користувача. По-справжньому економить
+                                час і гроші.
+                                Дякую за допомогу!!!
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+        <section class="bestsellers">
+            <div class="bestsellers__container">
+                <div class="bestsellers__title title">
+                    <h3>Хіти продажів</h3>
+                </div>
+                <div class="bestsellers__items">
+                    <div class="bestsellers-column">
+
+                        <div class="bestsellers__item item">
+                            <div class="bestsellers__item__img">
+                                <img class="bestsellers_img" src="{% static 'img/bestseller_1.jpeg' %}"
+                                     alt="bestseller">
+                            </div>
+                            <div class="bestsellers__item__title">
+                                Квіти нагідок у фільтр-пакетах, 20шт.
+                            </div>
+                            <div class="bestsellers__item__text">
+                                52,5 грн
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bestsellers-column">
+                        <div class="bestsellers__item item">
+                            <div class="bestsellers__item__img">
+                                <img class="bestsellers_img" src="{% static 'img/bestseller_2.jpeg' %}"
+                                     alt="bestseller">
+                            </div>
+                            <div class="bestsellers__item__title">
+                                Ромашки квітки у фільтр-пакетах, 20шт.
+                            </div>
+                            <div class="bestsellers__item__text">
+                                54,9 грн
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bestsellers-column">
+                        <div class="bestsellers__item item">
+                            <div class="bestsellers__item__img">
+                                <img class="bestsellers_img" src="{% static 'img/bestseller_3.png' %}" alt="bestseller">
+                            </div>
+                            <div class="bestsellers__item__title">
+                                Заспокійливий збір №2 у фільтр-пакетах, 20шт.
+                            </div>
+                            <div class="bestsellers__item__text">
+                                53,5 грн
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <section class="doctors-reviews">
+            <div class="doctors-reviews__container">
+                <div class="doctors-reviews__title title">
+                    <h3>Лікарі про сервіс</h3>
+                </div>
+                <div class="doctors-reviews__items">
+                    <div class="doctors-reviews-column">
+
+                        <div class="doctors-reviews__item item">
+                            <div class="doctors-reviews__item__img">
+                                <img class="doctors-reviews_img" src="{% static 'img/doctor_1.jpg' %}" alt="doctor">
+                            </div>
+                            <div class="doctors-reviews__item__title">
+                                Лєсков Володимир Григорович
+                                <span>лікар ортопед-травматолог вищої категорії</span>
+                            </div>
+                            <div class="doctors-reviews__item__text">
+                                Я постійно користуюся сайтом аптеки "Бажаємо здоров'я", тому що на ньому багато
+                                довідкової інформації саме для лікарів. Знаючи пацієнта, можу підібрати необхідні ліки
+                                або його аналоги, подивитися, які ліки зараз на перереєстрації, переглядаю інструкції до
+                                препаратів.
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="doctors-reviews-column">
+
+                        <div class="doctors-reviews__item item">
+                            <div class="doctors-reviews__item__img">
+                                <img class="doctors-reviews_img" src="{% static 'img/doctor_2.png' %}" alt="doctor">
+                            </div>
+                            <div class="doctors-reviews__item__title">
+                                Романюк Ніла Григорівна
+                                <span>лікар-імунолог</span>
+
+                            </div>
+                            <div class="doctors-reviews__item__text">
+                                В Україні дуже актуальна тема вакцинації. Я рекомендую сайт аптеки "Бажаємо здоров'я",
+                                оскільки там можна знайти не тільки потрібний препарат і забронювати його зі знижкою,
+                                але і прочитати інструкції з вакцин та дізнатися про можливі побічні ефекти.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <footer class="footer lock-padding">
+        Самолікування може бути шкідливим для вашого здоров'я
+    </footer>
+</div>
+
+</body>
+</html>

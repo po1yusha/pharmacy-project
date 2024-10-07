@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/catalog_of_goods_1_style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+    <title>Медикаменти</title>
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+            <div class="header__menu menu">
+                <nav class="menu__body">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="{% url 'index' %}" class="menu__link main-page_text">Головна</a>
+                        </li>
+                        <li class="menu__item">
+                            <nav class="drop-menu">
+                                <ul class="drop-menu__list">
+                                    <li>
+                                        <a href="" class="menu__link blue">Каталог товарів</a>
+                                        <ul class="sub-menu__list">
+                                            <li>
+                                                <a href="catalog_of_goods_1.html" class="sub-menu__link">Медикаменти</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">БАД і вітаміни</a>
+                                                <ul class="sub-sub-menu__list">
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Мінеральні добавки</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Тонізуючі препарати</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="" class="sub-sub-menu__link">Вітаміни для
+                                                            діабетиків</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Медичні товари</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Антибіотики</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Товари для косметологів</a>
+                                            </li>
+                                            <li>
+                                                <a href="" class="sub-menu__link">Товари для мам і дітей</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </li>
+
+                        <li class="menu__item search">
+                            <div class="search-bar">
+                                <form class="search-bar__box" id="search-form">
+                                    <div class="search-bar__container">
+                                        <input type="image" src="{% static 'img/search_logo.png' %}" class="search_logo"
+                                               alt="search">
+                                        <input id="search-bar" name="search_expression" placeholder="Пошук"
+                                               class="search-bar__input">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="menu__item with_icon menu__item-cart">
+                            <div class="actions-header__item cart-header">
+                                <a href="#popup__cart" class="menu__link popup-link cart-item">
+                                    <div class="icon-cart">
+                                        <i class="fa-regular fa-cart-shopping cart-header__icon"></i>
+                                        <span class="amount">0</span>
+                                    </div>
+                                    <div class="menu__item-text">
+                                        Кошик
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="main lock-padding">
+        <section class="medicaments">
+            <div class="medicaments__container">
+                <div class="medicaments__items">
+
+                    {% for product in products %}
+
+                        <div class="medicaments-column">
+                            <div class="medicaments__item item">
+                                <div class="medicaments__item__img">
+                                    <img class="medicaments_img" src="{{ product.product_img }}"
+                                         alt="medicament">
+                                </div>
+                                <div class="price_and_rating">
+                                    <h4 class="medicaments__item__price">
+                                        {{ product.price }}
+                                    </h4>
+                                    <div class="rating">
+                                        {% for star in product.range_rating %}
+                                            <i class="fa-solid fa-star checked"></i>
+                                        {% endfor %}
+                                        {% for star in product.range_gray %}
+                                            <i class="fa-solid fa-star"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <h4 class="comments">{{ product.comment }}</h4>
+                                <h3 class="medicaments__item__title">
+                                    {{ product.name }}
+                                </h3>
+
+                                <div class="medicaments__item__button">
+                                    <a href="#popup__cart" class="popup-link">
+                                        <button class="medicaments-button"><i
+                                                class="fa-regular fa-cart-shopping order-cart"></i>Замовити
+                                        </button>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    {% empty %}
+                        <p class="title_no_exist">Товари відсутні</p>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        Самолікування може бути шкідливим для вашого здоров'я
+    </footer>
+</div>
+
+<div id="popup__cart" class="popup">
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="#header" class="popup__close close-popup">X</a>
+            <div class="popup__title">Кошик</div>
+            <div class="cart-header__body">
+                <ul class="cart-header__list cart-list">
+
+                </ul>
+            </div>
+            <div class="cart-list-price">
+                <h3 class="order-price">Сума замовлення: </h3>
+                <span class="fullprice"></span>
+            </div>
+            <div class="cart-list-permission">
+                <div class="checkbox">
+                    <input id="formAgreement" checked type="checkbox" name="agreement"
+                           class="checkbox__input _req">
+                    <label for="formAgreement" class="checkbox__label"><span>Я даю згоду на збереження моїх персональних даних</span></label>
+                </div>
+            </div>
+            <div class="cart-list-buttons">
+                <button class="continue-shopping close-popup">Продовжити покупки</button>
+                <a href="{% url 'order_page' %}" class="order-page">
+                    <button class="make-order">Оформити замовлення</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/script_popup.js' %}"></script>
+<script src="{% static 'js/catalog_of_goods_1.js' %}"></script>
+<script src="{% static 'js/search_ajax.js' %}"></script>
+</body>
+</html>

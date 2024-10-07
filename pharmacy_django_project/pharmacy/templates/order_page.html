@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформлення замовлення</title>
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/order_page_style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+        </div>
+    </header>
+    <main class="main lock-padding">
+        <div class="form-container">
+            <div class="form__title">Оформлення замовлення</div>
+            <div class="form">
+                <form method="post" action="{% url 'order_page' %}" id="form" class="form__body">
+                    {% comment %}                    <div class="personal-data" style="display: none">
+                        <div class="form__item">
+                            <h3 class="title-personal-data">Вкажіть контактну інформацію</h3>
+                        </div>
+                        <div class="form__item personal-data__item">
+                            <label for="formName" class="form__label">Ім'я<span class="red-star">*</span>:</label>
+                            <input id="formName" placeholder="Петро" type="text" name="name"
+                                   class="form__input personal-data_input _req _name">
+                            <div class="error-message">Ім'я має складатись мінімум з 3 букв та починатись з великої
+                                літери!
+                            </div>
+                        </div>
+                        <div class="form__item personal-data__item">
+                            <label for="formSurname" class="form__label">Прізвище<span
+                                    class="red-star">*</span>:</label>
+                            <input id="formSurname" placeholder="Петренко" type="text" name="surname"
+                                   class="form__input personal-data_input _req _name">
+                            <div class="error-message">Прізвище має починатись з великої літери!</div>
+                        </div>
+                        <div class="form__item personal-data__item">
+                            <label for="formEmail" class="form__label">Електронна пошта<span class="red-star">*</span>:</label>
+                            <input id="formEmail" placeholder="post@gmail.com" type="email" name="email"
+                                   class="form__input personal-data_input _req _email">
+                            <div class="error-message">Електронна пошта не може складатись з цифр та має містити знак
+                                @!
+                            </div>
+                        </div>
+                        <div class="form__item personal-data__item">
+                            <label for="formPhone" class="form__label">Номер телефону<span
+                                    class="red-star">*</span>:</label>
+                            <input id="formPhone" type="tel" name="phone"
+                                   placeholder="+38 (___)___-__-__"
+                                   class="form__input personal-data_input _req _phone">
+                            <div class="error-message">Номер телефону має містити 10 цифр та відповідати зазначеному
+                                прикладу +38 (099) 999 99 99!
+                            </div>
+                        </div>
+                    </div>{% endcomment %}
+                    <div class="city-order">
+                        <div class="form__item">
+                            <h3 class="title-personal-data">Вкажіть місто доставки</h3>
+                        </div>
+                        <div class="form__item">
+                            <label for="format" class="form__label">Місто<span class="red-star">*</span>:</label>
+                            <div class="select">
+                                <select name="format" id="format">
+                                    <option value="Дніпро">Дніпро</option>
+                                    <option value="Запоріжжя">Запоріжжя</option>
+                                    <option value="Київ">Київ</option>
+                                    <option value="Львів">Львів</option>
+                                    <option value="Одеса">Одеса</option>
+                                    <option value="Харків">Харків</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order__title">Виберіть спосіб доставки</div>
+                    <div class="order-method">
+
+                        <div class="form__item item-radio">
+                            <input id="formCourier" type="radio" value="courier" name="method"
+                                   class="form__input-radio order-method__input">
+                            <label for="formCourier" class="form__label-radio"><span>Кур'єром від аптеки "Бажаємо здоров'я" <i
+                                    class="fa-solid fa-truck"></i></span></label>
+
+                            <div class="addressForCourier order-method-selection">
+                                <label for="formAddress" class="form__label sub__form-label">Адреса отримувача<span
+                                        class="red-star">*</span>:</label>
+                                <input id="formAddress" type="text" name="address"
+                                       class="form__input personal-data_input sub__form-input">
+                            </div>
+
+                        </div>
+
+                        <div class="form__item item-radio">
+                            <input id="formSelf" type="radio" name="method" value="pharmacy"
+                                   class="form__input-radio order-method__input">
+                            <label for="formSelf" class="form__label-radio"><span>Самовивіз з аптеки <i
+                                    class="fa-solid fa-user"></i></span></label>
+
+                            <div class="addressForSelf order-method-selection">
+                                <label for="pharmacy" class="form__label sub__form-label">Оберіть зручну для себе аптеку<span
+                                        class="red-star">*</span>:</label>
+                                <div class="select selectPharmacy">
+                                    <select name="pharmacyAddress" id="pharmacy">
+                                        <option value="">Виберіть варіант</option>
+                                        <option value="пр-т. Івана Мазепи, 34">пр-т. Івана Мазепи, 34</option>
+                                        <option value="пр-т. Богдана Хмельницького, 8">пр-т. Богдана Хмельницького, 8
+                                        </option>
+                                        <option value="Донецьке шосе, 2Б">Донецьке шосе, 2Б</option>
+                                        <option value="Набережна Перемоги, 86Д">Набережна Перемоги, 86Д</option>
+                                        <option value="вул. Будівельників, 29">вул. Будівельників, 29</option>
+                                        <option value="пр-т. Незалежності, 7">пр-т. Незалежності, 7</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form__item item-radio">
+                            <input id="formNPDep" type="radio" name="method" value="NPDep"
+                                   class="form__input-radio order-method__input">
+                            <label for="formNPDep" class="form__label-radio"><span>Нова пошта Відділення <i
+                                    class="fa-solid fa-square-h"></i></span></label>
+
+                            <div class="addressNPDep order-method-selection">
+                                <label for="NPDep" class="form__label sub__form-label">Оберіть відділення нової
+                                    пошти<span
+                                            class="red-star">*</span>:</label>
+                                <div class="select selectNPDep">
+                                    <select name="NPDep" id="NPDep">
+                                        <option value="">Виберіть варіант</option>
+                                        <option value="Відділення №1: вул. Пирогівський шлях, 135">Відділення №1: вул.
+                                            Пирогівський шлях, 135
+                                        </option>
+                                        <option value="Відділення №2: вул. Богатирська, 11">Відділення №2: вул.
+                                            Богатирська, 11
+                                        </option>
+                                        <option value="Відділення №3: вул. Набережно-Заводська, 123Б">Відділення №3:
+                                            вул. Набережно-Заводська, 123Б
+                                        </option>
+                                        <option value="Відділення №4: пр-т. Праці, 9">Відділення №4: пр-т. Праці, 9
+                                        </option>
+                                        <option value="Відділення №5: вул. Василя Чапленка, 8">Відділення №5: вул.
+                                            Василя Чапленка, 8
+                                        </option>
+                                        <option value="Відділення №6: вул. Богдана Хмельницького, 25б">Відділення №6:
+                                            вул. Богдана Хмельницького, 25б
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form__item item-radio">
+                            <input id="formUKDep" type="radio" name="method" value="UKDep"
+                                   class="form__input-radio order-method__input">
+                            <label for="formUKDep" class="form__label-radio"><span>Укрпошта Відділення <i
+                                    class="fa-solid fa-envelopes-bulk"></i></span></label>
+
+                            <div class="addressUKDep order-method-selection">
+                                <label for="UKDep" class="form__label sub__form-label">Оберіть відділення Укрпошти<span
+                                        class="red-star">*</span>:</label>
+                                <div class="select selectUKDep">
+                                    <select name="UKDep" id="UKDep">
+                                        <option value="">Виберіть варіант</option>
+                                        <option value="49000, проспект Дмитра Яворницького, 62">49000, проспект Дмитра
+                                            Яворницького, 62
+                                        </option>
+                                        <option value="49018, вулиця Моніторна, 2">49018, вулиця Моніторна, 2</option>
+                                        <option value="49024, вулиця Універсальна, 27">49024, вулиця Універсальна, 27
+                                        </option>
+                                        <option value="49035, вулиця Сумська, 29">49035, вулиця Сумська, 29</option>
+                                        <option value="49038, вулиця Привокзальна, 11">49038, вулиця Привокзальна, 11
+                                        </option>
+                                        <option value="49051, проспект Петра Калнишевського, 18">49051, проспект Петра
+                                            Калнишевського, 18
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="form__item">
+                            <h3 class="title-payment-method">Виберіть спосіб оплати</h3>
+                        </div>
+                        <div class="items-payment">
+                            <div class="form__item form__item-payment">
+                                <input checked id="formCard" type="radio" name="payment_method" value="card"
+                                       class="form__input-radio">
+                                <label for="formCard" class="form__label-radio"><span>Оплата карткою <i
+                                        class="fa-sharp fa-solid fa-credit-card"></i></span></label>
+                            </div>
+                            <div class="form__item form__item-payment">
+                                <input id="formCash" type="radio" name="payment_method" value="cash"
+                                       class="form__input-radio">
+                                <label for="formCash" class="form__label-radio"><span>Оплата готівкою <i
+                                        class="fa-solid fa-money-bill-1-wave"></i></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input class="totalCost" type="hidden" value="" name="total_cost"/>
+                    <input class="productJson" type="hidden" value="" name="productJson"/>
+
+                    <div class="bottom">
+                        <button type="reset" class="form__button clean__button">Очистити форму</button>
+                        <a href="#popup" class="create__user popup-link">
+                            <button type="submit" class="form__button">Оформити замовлення</button>
+                        </a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="your-order">
+
+        </div>
+
+    </main>
+</div>
+
+<div id="popup" class="popup">
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="#header" class="popup__close close-popup">X</a>
+            <div class="popup__title">Дякуємо, Ваші дані прийняті в обробку!</div>
+            <div class="popup__text">
+                <img class="popup__img" src="{% static 'img/check_mark.png' %}" alt="Check mark">
+            </div>
+            <a href="{% url 'index' %}" class="create__user">
+                <button class="form__button">На головну</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/load_order_details.js' %}"></script>
+<script src="{% static 'js/script_form.js' %}"></script>
+
+
+</body>
+</html>

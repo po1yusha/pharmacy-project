@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/my_orders_style.css' %} ">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+    <title>Аптека "Бажаємо здоров'я!"</title>
+
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+            <div class="header__menu menu">
+                <nav class="menu__body">
+                    <ul class="menu__list">
+
+
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </header>
+    <main class="main lock-padding">
+
+        <div class="label">
+            Деталі замовлення
+        </div>
+
+        <div class="headers-flex">
+            <div class="headers">
+                <div class="sub-item">
+                    Назва
+                </div>
+                <div class="sub-item">
+                    Кількість
+                </div>
+                <div class="sub-item">
+                    Ціна
+                </div>
+            </div>
+        </div>
+
+        <div class="main-flex">
+            {% for product in products %}
+                <div class="main-item">
+                    <div class="sub-item">
+                        {% comment %}product is dictionary {'count': 3, 'product': <Medicine: Альцмерат розчин для ін'єкцій 250 мг>} {% endcomment %}
+                        {{ product.product.name }}
+                    </div>
+                    <div class="sub-item">
+                        {{ product.count }}
+                    </div>
+                    <div class="sub-item">
+                        {% comment %}grivna sign{% endcomment %}
+                        {{ product.product.price }} &#8372;
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="main-flex-button">
+            <div class="main-button">
+                <a href="{% url 'my_orders' %}" class="create__user">
+                    <button class="form__button">На попередню сторінку</button>
+                </a>
+            </div>
+        </div>
+
+    </main>
+    <footer class="footer lock-padding">
+        Самолікування може бути шкідливим для вашого здоров'я
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/my_orders_style.css' %} ">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+    <title>Замовлення прийняте в обробку</title>
+
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+            <div class="header__menu menu">
+                <nav class="menu__body">
+                    <ul class="menu__list">
+
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </header>
+    <main class="main lock-padding">
+
+        <div class="label">
+            Дякуємо за замовлення!
+            <p class="send_message">Ваші дані прийняті та відправлені до обробки.</p>
+        </div>
+
+        <div class="label">
+                        <a href="{% url 'index' %}">
+                            <button type="submit" class="button">Повернутись на головну</button>
+                        </a>
+                    </div>
+
+    </main>
+    <footer class="footer lock-padding">
+        Самолікування може бути шкідливим для вашого здоров'я
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/4d889f93be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/my_orders_style.css' %} ">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/small_logo.png' %}">
+    <title>Мої замовлення</title>
+
+</head>
+<body>
+<div class="wrapper">
+    <header id="header" class="header lock-padding">
+        <div class="header__container">
+            <a href="{% url 'index' %}" class="header-logo">
+                <img class="header-logo__img" src="{% static 'img/logo.png' %}" alt="Logo">
+            </a>
+            <div class="header__menu menu">
+                <nav class="menu__body">
+                    <ul class="menu__list">
+
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </header>
+    <main class="main lock-padding">
+
+        <div class="label">
+            Мої замовлення
+        </div>
+
+        <div class="headers-flex">
+            <div class="headers">
+                <div class="sub-item">
+                    Статус
+                </div>
+                <div class="sub-item">
+                    Дата
+                </div>
+                <div class="sub-item">
+                    Сума
+                </div>
+            </div>
+        </div>
+
+        <div class="main-flex">
+            {% for order in orders %}
+                <div class="main-item">
+                    <div class="sub-item">
+                        {% for status in order.STATUS %}
+                            {% if status.0 == order.status %}
+                                {{ status.1 }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="sub-item">
+                        {{ order.order_date }}
+                    </div>
+                    <div class="sub-item">
+                        {{ order.total_cost }} &#8372;
+                    </div>
+                    <div class="sub-item">
+                        <form action="{% url 'my_orders_details' %}" method="get">
+                            <input type="hidden" value="{{ order.id }}" name="order_id">
+                            <button type="submit" class="button">Деталі</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+    <footer class="footer lock-padding">
+        Самолікування може бути шкідливим для вашого здоров'я
+    </footer>
+</div>
+
+</body>
+</html>
